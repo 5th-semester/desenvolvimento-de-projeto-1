@@ -1,9 +1,11 @@
 # dashboard/urls.py
 
 from django.urls import path
-from .templates.dashboard import views
+from . import views
 
 urlpatterns = [
-    # Quando o endereço for 'dashboard/', chame a função 'index' de views.py
-    path('', views.index, name='dashboard_home'),
+    # Documentação: A URL raiz ('') agora chama a view do primeiro andar.
+    path('', views.primeiro_andar_view, name='primeiro_andar'),
+    # Documentação: Uma nova URL para o segundo andar.
+    path('segundo-andar/', views.segundo_andar_view, name='segundo_andar'),
 ]

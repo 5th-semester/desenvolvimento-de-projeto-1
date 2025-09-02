@@ -1,0 +1,37 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+
+{% block title %}Segundo Andar - Análise WiFi{% endblock %}
+
+{% block content %}
+<div class="flex flex-col md:flex-row gap-8">
+    <div class="w-full md:w-1/2 bg-white p-6 rounded-lg shadow-md">
+        <h2 class="text-2xl font-semibold mb-4 text-gray-700">Planta Baixa - 2º Andar</h2>
+        <img src="{% static 'dashboard/images/segundo andar.jpg' %}" alt="Planta Baixa do 2º Andar" class="w-full h-auto rounded">
+    </div>
+
+    <div class="w-full md:w-1/2">
+        <h2 class="text-2xl font-semibold mb-4 text-gray-700">Medições de Sinal</h2>
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+            <table class="w-full text-sm text-left text-gray-500">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                    <tr>
+                        <th scope="col" class="px-6 py-3">Cômodo</th>
+                        <th scope="col" class="px-6 py-3">Potência (dBm)</th>
+                        <th scope="col" class="px-6 py-3">Download (Mbps)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for sinal in dados_segundo_andar %}
+                    <tr class="bg-white border-b hover:bg-gray-50">
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ sinal.id }}</th>
+                        <td class="px-6 py-4">{{ sinal.dbm }}</td>
+                        <td class="px-6 py-4">{{ sinal.download }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
