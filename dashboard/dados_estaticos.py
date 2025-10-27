@@ -2,27 +2,27 @@
 
 # Dados para o segundo andar (pontos 1 a 10)
 dados_segundo_andar = [
-    {'id': 1, 'dbm': -60, 'download': 540, 'upload': 540, 'interferencia': '1'},
-    {'id': 2, 'dbm': -68, 'download': 324, 'upload': 396, 'interferencia': '2'},
-    {'id': 3, 'dbm': -64, 'download': 252, 'upload': 360, 'interferencia': '3'},
-    {'id': 4, 'dbm': -69, 'download': 216, 'upload': 360, 'interferencia': '4'},
-    {'id': 5, 'dbm': -52, 'download': 72, 'upload': 32, 'interferencia': '5'},
-    {'id': 6, 'dbm': -61, 'download': 504, 'upload': 576, 'interferencia': '6'},
-    {'id': 7, 'dbm': -54, 'download': 111, 'upload': 43, 'interferencia': '7'},
-    {'id': 8, 'dbm': -54, 'download': 91, 'upload': 36, 'interferencia': '8'},
-    {'id': 9, 'dbm': -60, 'download': 90, 'upload': 44, 'interferencia': '9'},
-    {'id': 10, 'dbm': -56, 'download': 131, 'upload': 81, 'interferencia': '10'},
+    {'id': 1, 'dbm': -60, 'download': 540, 'upload': 540, 'interferencia': 1},
+    {'id': 2, 'dbm': -68, 'download': 324, 'upload': 396, 'interferencia': 2},
+    {'id': 3, 'dbm': -64, 'download': 252, 'upload': 360, 'interferencia': 3},
+    {'id': 4, 'dbm': -69, 'download': 216, 'upload': 360, 'interferencia': 4},
+    {'id': 5, 'dbm': -52, 'download': 72, 'upload': 32, 'interferencia': 5},
+    {'id': 6, 'dbm': -61, 'download': 504, 'upload': 576, 'interferencia': 6},
+    {'id': 7, 'dbm': -54, 'download': 111, 'upload': 43, 'interferencia': 7},
+    {'id': 8, 'dbm': -54, 'download': 91, 'upload': 36, 'interferencia': 8},
+    {'id': 9, 'dbm': -60, 'download': 90, 'upload': 44, 'interferencia': 9},
+    {'id': 10, 'dbm': -56, 'download': 131, 'upload': 81, 'interferencia': 10},
 ]
 
 # Dados para o primeiro andar (pontos 11 a 19)
 dados_primeiro_andar = [
-    {'id': 11, 'dbm': -51, 'download': 741, 'upload': 741, 'interferencia': '11'},
-    {'id': 12, 'dbm': -62, 'download': 585, 'upload': 585, 'interferencia': '12'},
-    {'id': 13, 'dbm': -60, 'download': 585, 'upload': 585, 'interferencia': '13'},
-    {'id': 14, 'dbm': -52, 'download': 823, 'upload': 823, 'interferencia': '14'},
-    {'id': 15, 'dbm': -62, 'download': 613, 'upload': 613, 'interferencia': '15'},
-    {'id': 16, 'dbm': -52, 'download': 823, 'upload': 823, 'interferencia': '16'},
-    {'id': 17, 'dbm': -71, 'download': 424, 'upload': 424, 'interferencia': '17'},
-    {'id': 18, 'dbm': -68, 'download': 485, 'upload': 485, 'interferencia': '18'},
-    {'id': 19, 'dbm': -58, 'download': 585, 'upload': 585, 'interferencia': '19'},
+    {'id': 11, 'dbm': -51, 'download': 741, 'upload': 741, 'interferencia': 11},
+    {'id': 12, 'dbm': -62, 'download': 585, 'upload': 585, 'interferencia': 12},
+    {'id': 13, 'dbm': -60, 'download': 585, 'upload': 585, 'interferencia': 13},
+    {'id': 14, 'dbm': -52, 'download': 823, 'upload': 823, 'interferencia': 14},
+    {'id': 15, 'dbm': -62, 'download': 613, 'upload': 613, 'interferencia': 15},
+    {'id': 16, 'dbm': -52, 'download': 823, 'upload': 823, 'interferencia': 16},
+    {'id': 17, 'dbm': -71, 'download': 424, 'upload': 424, 'interferencia': 17},
+    {'id': 18, 'dbm': -68, 'download': 485, 'upload': 485, 'interferencia': 18},
+    {'id': 19, 'dbm': -58, 'download': 585, 'upload': 585, 'interferencia': 19},
 ]

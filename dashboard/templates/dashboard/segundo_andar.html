@@ -19,6 +19,7 @@
                         <th scope="col" class="px-6 py-3">Cômodo</th>
                         <th scope="col" class="px-6 py-3">Potência (dBm)</th>
                         <th scope="col" class="px-6 py-3">Download (Mbps)</th>
+                        <th scope="col" class="px-6 py-3">Interferência (%)</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -27,11 +28,29 @@
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ sinal.id }}</th>
                         <td class="px-6 py-4">{{ sinal.dbm }}</td>
                         <td class="px-6 py-4">{{ sinal.download }}</td>
+                        <td class="px-6 py-4">{{ sinal.interferencia }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
         </div>
+
+        <!-- Heatmap visualização -->
+        <div class="mt-6">
+            <h3 class="text-lg font-semibold text-gray-700 mb-2">Mapa de Calor - 2º Andar</h3>
+            <div class="grid grid-cols-5 gap-3">
+                {% for sinal in dados_segundo_andar %}
+                <div class="flex items-center justify-center h-20 rounded text-white font-semibold" style="background-color: {{ sinal.heatcolor }};">
+                    <div class="text-center">
+                        <div class="text-sm">Ponto {{ sinal.id }}</div>
+                        <div class="text-xs">{{ sinal.dbm }} dBm</div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <p class="text-xs text-gray-500 mt-2">Cores: vermelho = fraco, verde = forte.</p>
+        </div>
+
     </div>
 </div>
 {% endblock %}

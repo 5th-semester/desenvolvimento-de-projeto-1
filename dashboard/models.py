@@ -1,6 +1,7 @@
 # dashboard/models.py
 
 from django.db import models
+import statistics
 
 class AnaliseRede(models.Model):
     """
@@ -18,6 +19,90 @@ class AnaliseRede(models.Model):
         verbose_name = "Análise de Rede"
         verbose_name_plural = "Análises de Rede"
 
+    # --- Novos métodos úteis para dashboards / gráficos ---
+    def get_all_sinais(self):
+        """Retorna QuerySet com todos os DadosSinais relacionados a esta análise."""
+        return DadosSinais.objects.filter(comodo__analise_rede=self)
+
+    @staticmethod
+    def _classify_measurement(dbm: float, download: float, interferencia: float):
+        """Classifica uma medição e retorna (status, [motivos]).
+        Regras simples (ajustáveis):
+          - boa: dbm >= -60 e download >= 100 e interferencia <= 50
+          - ruim: caso contrário
+        Motivos detectados: sinal muito fraco / sinal fraco / baixa velocidade / alta interferência / condições normais
+        """
+        reasons = []
+        try:
+            dbm = float(dbm)
+        except Exception:
+            dbm = 0.0
+        try:
+            download = float(download)
+        except Exception:
+            download = 0.0
+        try:
+            interfer = float(interferencia)
+        except Exception:
+            interfer = 0.0
+
+        if dbm < -70:
+            reasons.append('Sinal muito fraco')
+        elif dbm < -65:
+            reasons.append('Sinal fraco')
+
+        if download < 50:
+            reasons.append('Baixa velocidade de download')
+
+        if interfer > 50:
+            reasons.append('Alta interferência')
+
+        if not reasons:
+            reasons.append('Condições normais')
+
+        status = 'boa' if (dbm >= -60 and download >= 100 and interfer <= 50) else 'ruim'
+        return status, reasons
+
+    def get_status_counts(self):
+        """Retorna um dict com contagem de sinais {'boa': X, 'ruim': Y}."""
+        counts = {'boa': 0, 'ruim': 0}
+        for s in self.get_all_sinais().iterator():
+            status, _ = self._classify_measurement(s.dbm, s.download, s.interferencia)
+            counts[status] = counts.get(status, 0) + 1
+        return counts
+
+    def get_reasons_count(self):
+        """Retorna um dict com contagem agregada de motivos (strings)"""
+        reasons = {}
+        for s in self.get_all_sinais().iterator():
+            _, rs = self._classify_measurement(s.dbm, s.download, s.interferencia)
+            for r in rs:
+                reasons[r] = reasons.get(r, 0) + 1
+        return reasons
+
+    def avg_dbm_per_comodo(self):
+        """Retorna dict {comodo_nome: avg_dbm}"""
+        result = {}
+        for c in self.comodos.all():
+            vals = [s.dbm for s in c.sinais.all() if s.dbm is not None]
+            result[c.nome] = statistics.mean(vals) if vals else None
+        return result
+
+    def get_bad_signals(self):
+        """Retorna lista de sinais classificados como 'ruim' com detalhes para exibir no dashboard."""
+        bad = []
+        for s in self.get_all_sinais().iterator():
+            status, rs = self._classify_measurement(s.dbm, s.download, s.interferencia)
+            if status == 'ruim':
+                bad.append({
+                    'comodo': s.comodo.nome,
+                    'dbm': s.dbm,
+                    'download': s.download,
+                    'interferencia': s.interferencia,
+                    'motivos': rs,
+                })
+        return bad
+
 class Comodo(models.Model):
     """
     Modelo para armazenar os cômodos associados a uma análise.
@@ -33,6 +118,20 @@ class Comodo(models.Model):
     class Meta:
         verbose_name = "Cômodo"
         verbose_name_plural = "Cômodos"
+
+    # --- Métodos úteis para gráficos ---
+    def avg_dbm(self):
+        """Média do dbm dos sinais deste cômodo (ou None)."""
+        vals = [s.dbm for s in self.sinais.all() if s.dbm is not None]
+        return statistics.mean(vals) if vals else None
+
+    def status_summary(self):
+        """Retorna contagem de sinais bons/ruins apenas para este cômodo."""
+        counts = {'boa': 0, 'ruim': 0}
+        for s in self.sinais.all():
+            status, _ = AnaliseRede._classify_measurement(s.dbm, s.download, s.interferencia)
+            counts[status] = counts.get(status, 0) + 1
+        return counts
 
 class DadosSinais(models.Model):
     """
