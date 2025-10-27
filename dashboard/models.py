@@ -37,16 +37,16 @@ class Comodo(models.Model):
 class DadosSinais(models.Model):
     """
     Modelo para armazenar os dados técnicos do sinal medido em um cômodo específico.
-    A mudança crucial aqui é que esta classe NÃO está mais dentro de outra.
+    Agora um cômodo pode possuir vários sinais (relação One-to-Many).
     """
-    comodo = models.OneToOneField(Comodo, on_delete=models.CASCADE, primary_key=True)
+    comodo = models.ForeignKey(Comodo, on_delete=models.CASCADE, related_name="sinais")
     dbm = models.FloatField(verbose_name="Potência (dBm)")
     download = models.FloatField(verbose_name="Velocidade de Download (Mbps)")
     upload = models.FloatField(verbose_name="Velocidade de Upload (Mbps)")
     interferencia = models.FloatField(verbose_name="Interferência (%)")
 
     def __str__(self):
-        return f"Sinal para: {self.comodo.nome}"
+        return f"Sinal para: {self.comodo.nome} (ID do Cômodo: {self.comodo.id})"
 
     class Meta:
         verbose_name = "Dado de Sinal"
